@@ -1,0 +1,7 @@
+{
+  "name": "FabricDefectGuard",
+  "description": "Real-time fabric defect detection dashboard for Raspberry Pi inference monitoring.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
