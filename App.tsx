@@ -9,6 +9,7 @@ const App: React.FC = () => {
   const [status, setStatus] = useState(ConnectionStatus.CONNECTED);
   const [gsm, setGsm] = useState(180);
   const [width, setWidth] = useState(60);
+  const [isRunning, setIsRunning] = useState(true);
   
   // State for metrics with dummy initial data
   const [metrics, setMetrics] = useState<MetricData>({
@@ -23,6 +24,8 @@ const App: React.FC = () => {
 
   // Simulate live incoming data from Raspberry Pi
   useEffect(() => {
+    if (!isRunning) return;
+
     const interval = setInterval(() => {
       setMetrics(prev => {
         // Randomly increment defects occasionally to simulate detection
@@ -51,7 +54,7 @@ const App: React.FC = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isRunning]);
 
   return (
     <div className="w-full h-screen bg-dashboard-bg p-6 font-sans text-white overflow-hidden flex gap-6">
@@ -65,13 +68,13 @@ const App: React.FC = () => {
         </div>
 
         {/* Green Box: Inputs (GSM & Width) - Bottom Left */}
-        <div className="h-40 shrink-0">
+        <div className="h-36 shrink-0">
            <InputPanel 
               gsm={gsm} 
               setGsm={setGsm} 
               width={width} 
               setWidth={setWidth} 
-              isProcessing={false} 
+              isProcessing={!isRunning} 
             />
         </div>
 
@@ -86,11 +89,13 @@ const App: React.FC = () => {
         </div>
 
         {/* Brown Box: Controls (Download Report) - Bottom Right */}
-        <div className="h-28 shrink-0">
+        <div className="h-36 shrink-0">
           <Controls 
             metrics={metrics} 
             gsm={gsm} 
             width={width} 
+            isRunning={isRunning}
+            onToggle={() => setIsRunning(!isRunning)}
           />
         </div>
 
