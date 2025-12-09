@@ -10,46 +10,46 @@ interface InputPanelProps {
 
 const InputPanel: React.FC<InputPanelProps> = ({ gsm, setGsm, width, setWidth, isProcessing }) => {
   return (
-    <div className="w-full h-full bg-dashboard-panel border-4 border-green-500 rounded-xl p-4 flex flex-col justify-center shadow-[0_0_15px_rgba(34,197,94,0.3)] relative overflow-hidden">
+    <div className="w-full h-full bg-dashboard-panel border-4 border-green-500 rounded-xl p-2 flex flex-col justify-center shadow-[0_0_15px_rgba(34,197,94,0.3)] relative overflow-hidden">
       {/* Label Tag */}
       <div className="absolute top-0 right-0 bg-green-500 text-black font-bold text-xs px-3 py-1 rounded-bl-lg font-mono">
         INPUT_CONFIG
       </div>
 
-      <div className="flex flex-row gap-6 w-full h-full items-center px-2">
+      <div className="flex flex-row gap-6 w-full h-full items-center px-2 mt-2">
         {/* Input 1: GSM */}
-        <div className="flex-1 flex flex-col justify-center group h-full">
-          <label className="block text-green-400/80 text-xs font-mono mb-1 uppercase group-focus-within:text-green-400 transition-colors font-bold">
+        <div className={`flex-1 flex flex-col justify-center group h-full transition-opacity duration-300 ${isProcessing ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+          <label className="block text-green-400/80 text-[10px] font-mono mb-1 uppercase group-focus-within:text-green-400 transition-colors font-bold">
             Fabric GSM
           </label>
-          <div className="relative h-full max-h-[60px]">
+          <div className="relative h-full max-h-[48px]">
             <input
               type="number"
               value={gsm}
               onChange={(e) => setGsm(Number(e.target.value))}
-              className="w-full h-full bg-slate-900/80 border-2 border-slate-600 text-white p-3 rounded-lg focus:outline-none focus:border-green-500 focus:shadow-[0_0_10px_rgba(34,197,94,0.3)] font-mono text-xl transition-all"
+              className="w-full h-full bg-slate-900/80 border-2 border-slate-600 text-white px-3 py-1 rounded-lg focus:outline-none focus:border-green-500 focus:shadow-[0_0_10px_rgba(34,197,94,0.3)] font-mono text-lg transition-all disabled:cursor-not-allowed"
               placeholder="180"
               disabled={isProcessing}
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-xs">g/m²</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-[10px]">g/m²</span>
           </div>
         </div>
 
         {/* Input 2: Width */}
-        <div className="flex-1 flex flex-col justify-center group h-full">
-          <label className="block text-green-400/80 text-xs font-mono mb-1 uppercase group-focus-within:text-green-400 transition-colors font-bold">
+        <div className={`flex-1 flex flex-col justify-center group h-full transition-opacity duration-300 ${isProcessing ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+          <label className="block text-green-400/80 text-[10px] font-mono mb-1 uppercase group-focus-within:text-green-400 transition-colors font-bold">
             Fabric Width
           </label>
-          <div className="relative h-full max-h-[60px]">
+          <div className="relative h-full max-h-[48px]">
             <input
               type="number"
               value={width}
               onChange={(e) => setWidth(Number(e.target.value))}
-              className="w-full h-full bg-slate-900/80 border-2 border-slate-600 text-white p-3 rounded-lg focus:outline-none focus:border-green-500 focus:shadow-[0_0_10px_rgba(34,197,94,0.3)] font-mono text-xl transition-all"
+              className="w-full h-full bg-slate-900/80 border-2 border-slate-600 text-white px-3 py-1 rounded-lg focus:outline-none focus:border-green-500 focus:shadow-[0_0_10px_rgba(34,197,94,0.3)] font-mono text-lg transition-all disabled:cursor-not-allowed"
               placeholder="60"
               disabled={isProcessing}
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-xs">INCH</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-[10px]">INCH</span>
           </div>
         </div>
       </div>

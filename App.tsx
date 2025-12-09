@@ -9,7 +9,7 @@ const App: React.FC = () => {
   const [status, setStatus] = useState(ConnectionStatus.CONNECTED);
   const [gsm, setGsm] = useState(180);
   const [width, setWidth] = useState(60);
-  const [isRunning, setIsRunning] = useState(true);
+  const [isRunning, setIsRunning] = useState(false);
   
   // State for metrics with dummy initial data
   const [metrics, setMetrics] = useState<MetricData>({
@@ -56,6 +56,21 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, [isRunning]);
 
+  const handleToggle = () => {
+    if (!isRunning) {
+      // Reset metrics when starting a new session
+      setMetrics({
+        holes: 0,
+        sewingLines: 0,
+        totalWastageKg: 0,
+        wastagePercentage: 0,
+        timestamp: new Date().toISOString()
+      });
+      setHistory([]);
+    }
+    setIsRunning(!isRunning);
+  };
+
   return (
     <div className="w-full h-screen bg-dashboard-bg p-6 font-sans text-white overflow-hidden flex gap-6">
       
@@ -68,13 +83,13 @@ const App: React.FC = () => {
         </div>
 
         {/* Green Box: Inputs (GSM & Width) - Bottom Left */}
-        <div className="h-36 shrink-0">
+        <div className="h-24 shrink-0">
            <InputPanel 
               gsm={gsm} 
               setGsm={setGsm} 
               width={width} 
               setWidth={setWidth} 
-              isProcessing={!isRunning} 
+              isProcessing={isRunning} 
             />
         </div>
 
@@ -89,13 +104,13 @@ const App: React.FC = () => {
         </div>
 
         {/* Brown Box: Controls (Download Report) - Bottom Right */}
-        <div className="h-36 shrink-0">
+        <div className="h-24 shrink-0">
           <Controls 
             metrics={metrics} 
             gsm={gsm} 
             width={width} 
             isRunning={isRunning}
-            onToggle={() => setIsRunning(!isRunning)}
+            onToggle={handleToggle}
           />
         </div>
 
